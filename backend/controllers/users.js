@@ -9,8 +9,7 @@ export const createNewUser = async (req, res, next) => {
                 const hashedPassword = await bcrypt.hash(password, saltRound)
 
                 if (userExist) {
-                        res.status(400).json({ message: 'User already exists, please sign in instead' })
-                        return
+                       return res.status(400).json({ message: 'User already exists, please sign in instead' })
                 }
                 const newUser = new User({ first_name, last_name, email, password: hashedPassword })
                 await newUser.save()

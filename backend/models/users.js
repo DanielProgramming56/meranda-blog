@@ -37,9 +37,17 @@ const UserSchema = new mongoose.Schema({
     blogs: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Blog'
+    },
+    is_admin: {
+        type: Boolean,
+        default: false
+    },
+    verificationCode: {type: String, default: false},
+    avatar: {
+        type: String, 
+        default: ""
     }
 }, {timestamps: true})
-
 
 const User = mongoose.model('User', UserSchema)
 
