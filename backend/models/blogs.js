@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { Reviews } from "./reviewModels.js";
 // Define the Blog schema
 const BlogSchema = new mongoose.Schema({
     title: {
@@ -10,23 +10,33 @@ const BlogSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment', // Reference to the Comment model
-      },
-    ],
-    likes: {
+    category: {
+      type: String,
+      required: true
+    },
+    rating: {
       type: Number,
-      default: 0, // Initialize the number of likes to 0
-    },
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference to the User model
-    },
-    image: String
+  },
+  reviewsNumber: {
+      type: Number,
+  },
+    reviews: [
+      {type: mongoose.Schema.ObjectId, ref: Reviews}
+    ],
+    attr: [{
+      key: {type: String},
+      value : {type: String},
+    }],
+    // author: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: 'User', // Reference to the User model
+    // },
+    image: [],
+
   });
   
+  BlogSchema.index({name: "text", description: "text"}, {name: "TextIndex"})
+  BlogSchema.index({"attr.key": 1, "attr.value": 1})
   const Blog = mongoose.model('Blog', BlogSchema);
 
   export default Blog

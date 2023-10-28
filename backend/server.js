@@ -2,7 +2,7 @@ import express from 'express'
 import route from './api.js'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
+import { errorResponseHandler, invalidPathResponseHandler } from './middlewares/errorResponseHandler.js'
 
 // config
 dotenv.config()
@@ -10,11 +10,10 @@ dotenv.config()
 const app = express()
 app.use(express.json());
 
-
-
 // middleware
 app.use('/api', route)
-
+app.use(invalidPathResponseHandler)
+app.use(errorResponseHandler)
 
 
 // connect to Database 
